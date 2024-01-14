@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/index.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+        <title>Document</title>
+</head>
+<body>
+    <div id="splash-screen">
+        <div class="letter">E</div>
+        <div class="letter">M</div>
+        <div class="letter">E</div>
+    </div>
+    <div id="welcome-screen" class="welcome-screen">
+        <div class="welcome-container">
+            <!-- Welcome screen content goes here -->
+            <div id="page1">
+                <br><br><br><br><br>
+                <img class="illustration" src="images/onboarding1.jpg" alt="page1">
+                <h2>Get Realtime Emergency Number</h2>
+            </div>
+            <div id="page2" style="display:none;">
+                <br><br><br><br><br>
+                <img class="illustration" src="images/onboarding2.jpg" alt="page1">
+                <h2>Custom Essentail Map</h2>
+            </div>
+            <div id="page3" style="display:none;">
+                <br><br><br><br><br>
+                <img class="illustration" src="images/onboarding3.jpg" alt="page1">
+                <h2>Realtime nearby News</h2>
+            </div>
+            <div id="page4" style="display:none;">
+                <br><br><br><br><br>
+                <img class="illustration" src="images/onboarding4.jpg" alt="page1">
+                <h2>Sync with your People</h2>
+                
+            
+            </div>
+            <button onclick="showNextPage()" class="btn">
+                <i data-feather="arrow-right"></i>
+            </button>
+        </div>
+    </div> 
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        header {
+            background-color: #3498db; /* Header background color */
+            height: 200px;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ffcc00, #ff6699); /* Gradient for a placeholder illustration */
+            opacity: 0.3; /* Adjust the opacity as needed */
+        }
+
+        .illustration {
+            padding-top: 20px;
+        }
+
+        .content {
+            max-width: 400px;
+            margin: 30px auto; /* Adjusted margin */
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .verification-code input {
+            width: 40px; /* Adjusted width for square boxes */
+            height: 40px; /* Added height for square boxes */
+            padding: 10px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px; /* Keep a slight border-radius */
+            box-sizing: border-box;
+            text-align: center; /* Center text in the square box */
+            font-size: 18px; /* Adjusted font size for better visibility */
+        }
+
+        .verification-code button {
+        width: 100%;
+        padding: 12px; /* Increased padding for a larger button */
+        margin-top: 20px; /* Increased margin for separation */
+        border: none; /* Removed border for a cleaner look */
+        border-radius: 4px;
+        box-sizing: border-box;
+        background-color: #3498db;
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px; /* Adjusted font size for better visibility */
+        transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    }
+
+    .verification-code button:hover {
+        background-color: #2980b9;
+    }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- Placeholder illustration for the header -->
+        <div class="illustration" style="text-align: center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#fff" class="bi bi-image" viewBox="0 0 16 16">
+                <path d="M11.742 1.293a1 1 0 0 1 1.415 0l2.85 2.85a1 1 0 0 1 0 1.414L9.85 14.558a1 1 0 0 1-1.414 0L2.586 9.158a1 1 0 0 1 0-1.414l2.85-2.85a1 1 0 0 1 1.414 0L11.742 1.293zM13.156 5.7l-2.85-2.85L10.293 4.7l2.85 2.85 1.415-1.415zM1.74 4.7l5.738-5.737 2.85 2.85-5.738 5.738-2.85-2.85zm0 8.106l3.283-3.282 1.415 1.414-3.282 3.283-1.416-1.415zM14.2 2.828L11.415.043a1 1 0 0 0-1.415 0L.829 10.2a1 1 0 0 0-.29.495l-.002.008a.992.992 0 0 0-.061.18l-.018.07a1.013 1.013 0 0 0-.043.182l-.007.087a1 1 0 0 0 1.056 1.055l.086-.007c.067-.006.138-.024.213-.06l.058-.027c.06-.04.136-.095.23-.164l.084-.065a1 1 0 0 0 1.184.035l9.157-7.372a1 1 0 0 0 .035-1.181l-.065-.084a4.98 4.98 0 0 0-.164-.23l-.027-.058a4.919 4.919 0 0 0-.06-.213l-.007-.087a1.013 1.013 0 0 0-.043-.182l-.018-.07a.992.992 0 0 0-.061-.18l-.002-.008a1 1 0 0 0-.29-.495z"/>
+            </svg>
+        </div>
+    </header>
+
+    <div class="content">
+        <h2>Verify Code</h2>
+        <div class="form-group verification-code">
+            <input type="text" maxlength="1" id="digit1" />
+            <input type="text" maxlength="1" id="digit2" />
+            <input type="text" maxlength="1" id="digit3" />
+            <input type="text" maxlength="1" id="digit4" />
+        </div>
+        <button id="verifyBtn" onclick="redirectToHome()">Verify</button>
+    </div>
+
+    <script>
+        function redirectToHome() {
+            // Perform any additional actions here if needed
+            window.location.href = 'home.html';
+        }
+    </script>
+
+</body>
+</html>

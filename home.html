@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/index.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        * {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        html {
+            background-color: #ebebeb;
+        }
+
+        body {
+            background-color: #fff;
+        }
+
+        .header {
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            position: sticky;
+            margin-top: 100px;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            margin-bottom: 10px;
+        }
+
+        
+
+        .cards {
+            flex: 0 0 calc(45% - 20px);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+            margin-top: 200px;
+        }
+
+        .card {
+            width: calc(50% - 20px);
+            margin: 10px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px 8px 0 0;
+    background-color: #fff; 
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.card h2 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+        .card h2 {
+            color: #333;
+        }
+
+        .wave {
+            width: 100%;
+            opacity: .6;
+            position: absolute;
+            top: 1%;
+            left: 50%;
+            background: #0af;
+            width: 500px;
+            height: 500px;
+            margin-left: -250px;
+            margin-top: -400px;
+            transform-origin: 50% 48%;
+            border-radius: 43%;
+            animation: drift 3000ms infinite linear;
+        }
+
+        .wave.-three {
+            animation: drift 5000ms infinite linear;
+        }
+
+        .wave.-two {
+            animation: drift 7000ms infinite linear;
+            opacity: .1;
+            background: yellow;
+        }
+
+        .box:after {
+            content: '';
+            display: block;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(#e8a, 1), rgba(#def, 0) 80%, rgba(white, .5));
+            z-index: 11;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .title {
+            position: absolute;
+            left: 0;
+            top: -120px;
+            width: 100%;
+            z-index: 1;
+            line-height: 300px;
+            text-align: center;
+            color: white;
+            text-transform: uppercase;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: .4em;
+            font-size: 30px;
+            text-shadow: 0 1px 0 rgba(black, .1);
+            text-indent: .3em;
+        }
+
+        @keyframes drift {
+            from { transform: rotate(0deg); }
+            from { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .cards {
+                margin-top: 150px;
+            }
+
+            .card {
+                width: calc(100% - 20px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class='wave -one'></div>
+        <div class='wave -two'></div>
+        <div class='wave -three'></div>
+        <div class='title'>Services</div>
+    </div>
+
+    <div class="cards">
+        <div class="card" onclick="redirectToNextPage('fire.html')">
+            <img src="images/fire1.jpeg" alt="Card Image" >
+            <div class="card-content">
+                <h2>Fire</h2>
+                
+            </div>
+        </div>
+    
+        <div class="card" onclick="redirectToNextPage('fire.html')">
+            <img src="images/police.jpeg" alt="Card Image">
+            <div class="card-content">
+                <h2>Police</h2>
+               
+            </div>
+        </div>
+    
+        <div class="card" onclick="redirectToNextPage('ambulance.html')">
+            <img src="images/ambulance.jpeg" alt="Card Image">
+            <div class="card-content">
+                <h2>Ambulance</h2>
+                
+            </div>
+        </div>
+    
+        <div class="card" onclick="redirectToNextPage('bodyguard.html')">
+            <img src="images/tourits.jpeg" alt="Card Image">
+            <div class="card-content">
+                <h2 style="align-items: center;">BodyGuard</h2>
+                
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+
+    <nav>
+        <a class="nav-item" href="#">
+            <i data-feather="home"></i><span>Home</span>
+        </a>
+
+        <a class="nav-item" href="#">
+            <i data-feather="map-pin"></i><span>Map</span>
+        </a>
+
+        <a class="nav-item" href="#">
+            <i data-feather="book-open"></i><span>News</span>
+        </a>
+
+        <a class="nav-item" href="#">
+            <i data-feather="message-square"></i><span>Colab</span>
+        </a>
+    </nav>
+
+    <script>
+        feather.replace();
+        document.querySelector(".nav-item").focus();
+        function redirectToNextPage(nextPage) {
+            // Redirect to the specified next page
+            window.location.href = nextPage;
+        }
+    </script>
+</body>
+</html>
