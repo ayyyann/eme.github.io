@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multiple Cards Page</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+
+
+
+<div class="card-container">
+    <div class="card">
+        <img src="images/f.jpeg" alt="Image 1">
+        <div class="content">
+            <p>Extreme fire ouburst in grant Road.</p>
+        </div>
+        <div class="footer">
+            <div class="left">
+                <button class="fire-button">Fire</button>
+            </div>
+            <div class="right">
+                <span class="date">March 14, 2024</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <img src="images/tr.jpeg" alt="Image 2">
+        <div class="content">
+            <p>Mega traffic near bandra.</p>
+        </div>
+        <div class="footer">
+            <div class="left">
+                <button class="fire-button">Traffic</button>
+            </div>
+            <div class="right">
+                <span class="date">March 15, 2024</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav>
+    <a class="nav-item" href="home.html">
+        <i data-feather="home"></i><span>Home</span>
+    </a>
+
+    <a class="nav-item" href="map.html">
+        <i data-feather="map-pin"></i><span>Map</span>
+    </a>
+
+    <a class="nav-item" href="chat.html">
+        <i data-feather="message-square"></i><span>chat</span>
+    </a>
+
+    <a class="nav-item" href="colab.html">
+        <i data-feather="book-open"></i><span>Colab</span>
+    </a>
+</nav>
+<style>
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.card {
+    width: 300px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card .content {
+    padding: 10px;
+}
+
+.card .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.card .left {
+    flex: 1;
+}
+
+.card .right {
+    flex: 1;
+    text-align: right;
+}
+
+.fire-button {
+    padding: 5px 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.date {
+    font-size: 14px;
+}
+</style>
+
+</body>
+</html>

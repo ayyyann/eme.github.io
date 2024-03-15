@@ -28,6 +28,10 @@ function showNextPage() {
         // Optionally, you can navigate to the OTP screen or perform other actions
         redirectToOTP();
     }
+    if (currentPage === 4) {
+        document.getElementById('nextButton').innerHTML = "Let's Start";
+        document.getElementById('nextButton').classList.add('start-button');
+    }
 }
 feather.replace();
 document.querySelector(".nav-item").focus();
@@ -39,3 +43,4 @@ function redirectToOTP() {
     window.location.href = 'login.html';
 }
 
+/* Chatbot */

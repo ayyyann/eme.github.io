@@ -106,6 +106,7 @@
 <body>
     <h1>MAP</h1>
     <div id="map"></div>
+    
     <button id="medicalButton" class="map-button">Show Medical Shops</button>
     <button id="hospitalButton" class="map-button">Show Hospitals</button>
     <button id="policeButton" class="map-button">Show Police Stations</button>
@@ -114,20 +115,21 @@
             <i data-feather="home"></i><span>Home</span>
         </a>
 
-        <a class="nav-item" href="#">
+        <a class="nav-item" href="map.html">
             <i data-feather="map-pin"></i><span>Map</span>
         </a>
 
-        <a class="nav-item" href="#">
-            <i data-feather="book-open"></i><span>News</span>
+        <a class="nav-item" href="chat.html">
+            <i data-feather="message-square"></i><span>chat</span>
         </a>
 
-        <a class="nav-item" href="#">
-            <i data-feather="message-square"></i><span>Colab</span>
+        <a class="nav-item" href="colab.html">
+            <i data-feather="book-open"></i><span>Colab</span>
         </a>
     </nav>
     <script>
          feather.replace();
+         
         const map = L.map('map').setView([51.505, -0.09], 13);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -143,7 +145,7 @@
         });
 
         const hospitalIcon = L.icon({
-            iconUrl: 'C:\\Users\\welcome\\Desktop\\eme_webapp\\eme\\images\\fire1.jpeg',
+            iconUrl: 'images/medical.jpeg',
             iconSize: [32, 32],
             iconAnchor: [16, 32],
             popupAnchor: [0, -32],
@@ -245,7 +247,7 @@
         document.getElementById('hospitalButton').addEventListener('click', () => {
             const hospitals = [
                 {
-                    name: "Hospital 1",
+                    name: "Shri Hospital",
                     phoneNumber: "987-654-3210",
                     coordinates: [19.230225899362633, 73.11690174042315]
                 },

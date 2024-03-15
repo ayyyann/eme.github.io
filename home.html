@@ -212,18 +212,18 @@
             <i data-feather="map-pin"></i><span>Map</span>
         </a>
 
-        <a class="nav-item" href="#">
-            <i data-feather="book-open"></i><span>News</span>
+        <a class="nav-item" href="chat.html">
+            <i data-feather="message-square"></i><span>chat</span>
         </a>
 
-        <a class="nav-item" href="#">
-            <i data-feather="message-square"></i><span>Colab</span>
+        <a class="nav-item" href="colab.html">
+            <i data-feather="book-open"></i><span>Colab</span>
         </a>
-    </nav>
 
     <script>
         feather.replace();
         document.querySelector(".nav-item").focus();
+        var a = document.querySelector(".nav-item").lastChild.focus();
         function redirectToNextPage(nextPage) {
             // Redirect to the specified next page
             window.location.href = nextPage;

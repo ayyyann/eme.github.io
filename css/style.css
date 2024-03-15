@@ -10,11 +10,19 @@
     background-color: #000;
     color: linear-gradient(90deg, #2193b0, #6dd5ed);
     flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+    
+}
+body{
+    margin: 0;
+    padding: 0;
 }
 
 .letter {
     opacity: 0;
     animation: fadeIn ease-out 2s forwards, colorChange ease-out 3s forwards;
+    font-size: 28px;
 }
 
 .letter:nth-child(1) { animation-delay: 0.5s; }
@@ -51,6 +59,11 @@
 .welcome-screen {
     display: none;
 }
+.start-button {
+    border-radius: 25px; /* Adjust border radius as needed */
+    padding: 10px 20px; /* Adjust padding as needed */
+}
+
 .illustration {
     max-width: 100%;
     position: relative;
@@ -135,8 +148,8 @@ nav {
 
 /* SERVICES *//* SERVICES *//* SERVICES *//* SERVICES *//* SERVICES *//* SERVICES */
 .services-header {
-    position: relative;
-    top: 100px;
+    position: fixed;
+    top: 0px;
     margin-top: 1px;
     background: linear-gradient(to bottom, #007bff, #0056b3);
     color: #fff;
