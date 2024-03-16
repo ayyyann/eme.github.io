@@ -130,7 +130,7 @@
     <script>
          feather.replace();
          
-        const map = L.map('map').setView([51.505, -0.09], 13);
+        const map = L.map('map').setView([18.92408965470221, 72.83222189400396], 13);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -152,7 +152,7 @@
         });
 
         const policeIcon = L.icon({
-            iconUrl: 'C:\\Users\\welcome\\Desktop\\eme_webapp\\eme\\images\\ndrf.jpeg',
+            iconUrl: 'images/ndrf.jpeg',
             iconSize: [32, 32],
             iconAnchor: [16, 32],
             popupAnchor: [0, -32],
@@ -212,14 +212,14 @@
         document.getElementById('medicalButton').addEventListener('click', () => {
             const medicalShops = [
                 {
-                    name: "Medical Shop 1",
+                    name: "Sheetal Medical & General Stores",
                     phoneNumber: "123-456-7890",
-                    coordinates: [19.23057539076297, 73.1169607490206]
+                    coordinates: [18.923473938647827, 72.83199059983818]
                 },
                 {
-        name: "Medical Shop 3",
+        name: "S.K. MEDICAL AND GENERAL STORE",
         phoneNumber: "789-012-3456",
-        coordinates: [19.232, 73.118]
+        coordinates: [18.92014279875353, 72.83010229632202]
     },
                 // Add more medical shops with their details and coordinates
             ];
@@ -260,9 +260,9 @@
         document.getElementById('policeButton').addEventListener('click', () => {
             const policeStations = [
                 {
-                    name: "Police Station 1",
+                    name: "Colaba Police Station",
                     phoneNumber: "555-123-4567",
-                    coordinates: [19.23057539076297, 73.1169607490206]
+                    coordinates: [18.922444321857455, 72.83118419820215]
                 },
                 // Add more police stations with their details and coordinates
             ];
