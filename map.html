@@ -6,177 +6,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <!-- Make sure you put this AFTER Leaflet's CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <script defer src="js/index.js"></script>
     <script src="https://unpkg.com/feather-icons"></script>
 
     <title>Document</title>
     <style>
+        html,
         body {
             padding: 0;
             margin: 0;
+            overflow: hidden; /* Prevent scrolling */
         }
 
         #map {
-            height: calc(100vh - 80px); /* Adjusted to make space for nav bar */
-            width: 100%;
+            height: 100vh; /* Adjusted height */
+            width: 100vw; /* Full width */
             z-index: 0;
         }
 
-        .map-button {
-            position: absolute;
-            z-index: 1000;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-        }
-
-        #medicalButton {
+        .button-container {
+            position: fixed;
             top: 10px;
             left: 10px;
-        }
-
-        #hospitalButton {
-            top: 60px;
-            left: 10px;
-        }
-
-        #policeButton {
-            top: 110px;
-            left: 10px;
-        }
-
-        .popup-content {
-            max-width: 200px;
-        }
-
-        nav {
             display: flex;
-            justify-content: space-around;
-            background-color: #333;
-            padding: 12px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+            justify-content: space-between; /* Space between buttons */
+            width: calc(100% - 20px); /* Adjusted width */
+            max-width: 600px; /* Max width for responsiveness */
             z-index: 1001; /* Set z-index higher than the map */
         }
 
-        .nav-item {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: white;
-            padding: 12px 16px;
-            border-radius: 50px;
-            background-color: rgba(255, 255, 255, 0);
+        .round-button {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+            border: none;
+            border-radius: 15px; /* Adjusted border radius */
+            padding: 4px 8px; /* Adjusted padding */
+            cursor: pointer;
+            font-size: 12px; /* Adjusted font size */
+            margin: 0; /* Remove margin */
         }
 
-        .nav-item span {
-            width: 0;
-            overflow: hidden;
-        }
+        @media screen and (max-width: 768px) {
+            .button-container {
+                top: 10px;
+                width: 80%;
+                left: 15%;
+            }
 
-        .nav-item:focus {
-            text-decoration: none;
-            color: white;
-            background-color: rgba(255, 255, 255, 0.2);
-            transition: 0.2s;
-        }
-
-        .nav-item:focus span {
-            width: 100%;
-            margin-left: 8px;
-            transition: 0.2s;
-        }
-
-        *:focus {
-            outline: none;
+            .round-button {
+                padding: 10px 12px;
+                border-radius: 50px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <h1>MAP</h1>
+    <div class="button-container">
+        <button id="hospitalButton" class="round-button">Hospital</button>
+        <button id="toiletButton" class="round-button">Toilet</button>
+        <button id="medicalButton" class="round-button">Medical Shop</button>
+        <button id="garageButton" class="round-button">Garage</button>
+    </div>
+
     <div id="map"></div>
-    
-    <button id="medicalButton" class="map-button">Show Medical Shops</button>
-    <button id="hospitalButton" class="map-button">Show Hospitals</button>
-    <button id="policeButton" class="map-button">Show Police Stations</button>
-    <nav>
-        <a class="nav-item" href="home.html">
-            <i data-feather="home"></i><span>Home</span>
-        </a>
 
-        <a class="nav-item" href="map.html">
-            <i data-feather="map-pin"></i><span>Map</span>
-        </a>
-
-        <a class="nav-item" href="chat.html">
-            <i data-feather="message-square"></i><span>chat</span>
-        </a>
-
-        <a class="nav-item" href="colab.html">
-            <i data-feather="book-open"></i><span>Colab</span>
-        </a>
-    </nav>
     <script>
-         feather.replace();
-         
-        const map = L.map('map').setView([18.92408965470221, 72.83222189400396], 13);
+        feather.replace();
+
+        const map = L.map('map').setView([51.505, -0.09], 17);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
-        const medicalIcon = L.icon({
-            iconUrl: 'images/aids.jpeg',
-            iconSize: [32, 32],
-            iconAnchor: [16, 32],
-            popupAnchor: [0, -32],
-        });
-
-        const hospitalIcon = L.icon({
-            iconUrl: 'images/medical.jpeg',
-            iconSize: [32, 32],
-            iconAnchor: [16, 32],
-            popupAnchor: [0, -32],
-        });
-
-        const policeIcon = L.icon({
-            iconUrl: 'images/ndrf.jpeg',
-            iconSize: [32, 32],
-            iconAnchor: [16, 32],
-            popupAnchor: [0, -32],
-        });
-
-        let marker, circle, routingControl;
+        let marker;
+        let routingControl; // Declare routing control variable
 
         function success(pos) {
             const lat = pos.coords.latitude;
             const lng = pos.coords.longitude;
-            const accuracy = pos.coords.accuracy;
 
-            // Remove existing marker and circle
+            // Remove existing marker
             if (marker) {
                 map.removeLayer(marker);
-                map.removeLayer(circle);
             }
 
-            // Add new marker and circle for live location
-            marker = L.marker([lat, lng]).addTo(map);
-            circle = L.circle([lat, lng], { radius: accuracy }).addTo(map);
+            // Add new draggable marker for live location
+            marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+            map.setView([lat, lng], 14); // Set the view to the live location
 
-            // Fit the map bounds to the circle
-            map.fitBounds(circle.getBounds());
+            // Update live location when marker is dragged
+            marker.on('dragend', function (event) {
+                const newLatLng = event.target.getLatLng();
+                map.setView(newLatLng, 13); // Set the view to the new location
+            });
         }
 
         function error(err) {
@@ -187,7 +117,7 @@
             }
         }
 
-        // Function to handle double-click event on the map
+        // Function to handle double click on the map
         function handleMapDoubleClick(e) {
             const destination = e.latlng;
 
@@ -202,98 +132,129 @@
                     L.latLng(marker.getLatLng()), // Start from live location
                     destination
                 ],
-                routeWhileDragging: true
+                routeWhileDragging: true,
+            position: 'bottomleft'
             }).addTo(map);
         }
 
         // Attach the double-click event listener to the map
         map.on('dblclick', handleMapDoubleClick);
 
-        document.getElementById('medicalButton').addEventListener('click', () => {
-            const medicalShops = [
-                {
-                    name: "Sheetal Medical & General Stores",
-                    phoneNumber: "123-456-7890",
-                    coordinates: [18.923473938647827, 72.83199059983818]
-                },
-                {
-        name: "S.K. MEDICAL AND GENERAL STORE",
-        phoneNumber: "789-012-3456",
-        coordinates: [18.92014279875353, 72.83010229632202]
-    },
-                // Add more medical shops with their details and coordinates
-            ];
+        // Function to add marker at a specified location with custom icon and popup content
+        function addMarker(location, iconUrl, name, phone, cost) {
+            const customIcon = L.icon({
+                iconUrl: iconUrl,
+                iconSize: [32, 32], // Adjust size as needed
+                iconAnchor: [16, 32], // Adjust anchor if necessary
+                popupAnchor: [0, -32] // Adjust popup anchor if needed
+            });
 
-            // Clear existing markers (excluding live location marker)
+            const marker = L.marker(location, { icon: customIcon }).addTo(map);
+
+            // Popup content
+            const popupContent = `
+                <b>Name:</b> ${name}<br>
+                <b>Phone:</b> ${phone}<br>
+                <b>Cost:</b> ${cost}
+            `;
+
+            marker.bindPopup(popupContent);
+        }
+
+        // Define custom icons for each location type
+        const icons = {
+            hospital: 'images/hospital-icon.png',
+            toilet: 'toilet-icon.png',
+            medical: 'medical-icon.png',
+            garage: 'garage-icon.png'
+        };
+
+        // Define coordinates and details for each location type
+        const locations = {
+            hospital: [
+                { coordinates: [19.231950950204823, 73.11875942733596], name: "Hospital 1", phone: "1234567890", cost: "$50" },
+                { coordinates: [51.52, -0.11], name: "Hospital 2", phone: "1234567890", cost: "$50" }
+                // Add more hospitals as needed
+            ],
+            toilet: [
+                { coordinates: [19.23189016965419, 73.11807278184695], name: "Toilet 1", phone: "1234567890", cost: "$50" },
+                { coordinates: [51.54, -0.13], name: "Toilet 2", phone: "1234567890", cost: "$50" }
+                // Add more toilets as needed
+            ],
+            medical: [
+                { coordinates: [19.23270057514642, 73.120132718314], name: "Medical Shop 1", phone: "1234567890", cost: "$50" },
+                { coordinates: [19.23174834828191, 73.11972502255489], name: "Medical Shop 2", phone: "1234567890", cost: "$50" }
+                // Add more medical shops as needed
+            ],
+            garage: [
+                { coordinates: [51.57, -0.16], name: "Garage 1", phone: "1234567890", cost: "$50" },
+                { coordinates: [51.58, -0.17], name: "Garage 2", phone: "1234567890", cost: "$50" }
+                // Add more garages as needed
+            ]
+        };
+
+        // Event listener for hospital button
+        document.getElementById('hospitalButton').addEventListener('click', function() {
+            clearMarkers(); // Clear existing markers
+            addMarkers('hospital', locations.hospital);
+        });
+
+        // Event listener for toilet button
+        document.getElementById('toiletButton').addEventListener('click', function() {
+            clearMarkers(); // Clear existing markers
+            addMarkers('toilet', locations.toilet);
+        });
+
+        // Event listener for medical shop button
+        document.getElementById('medicalButton').addEventListener('click', function() {
+            clearMarkers(); // Clear existing markers
+            addMarkers('medical', locations.medical);
+        });
+
+        // Event listener for garage button
+        document.getElementById('garageButton').addEventListener('click', function() {
+            clearMarkers(); // Clear existing markers
+            addMarkers('garage', locations.garage);
+        });
+
+        // Function to add markers for a specific location type
+        function addMarkers(type, locs) {
+            locs.forEach(loc => {
+                addMarker(loc.coordinates, icons[type], loc.name, loc.phone, loc.cost);
+            });
+        }
+
+        // Function to clear all markers from the map
+        function clearMarkers() {
             map.eachLayer(layer => {
                 if (layer instanceof L.Marker && layer !== marker) {
                     map.removeLayer(layer);
                 }
-            });
-
-            // Add markers for medical shops
-            medicalShops.forEach(shop => {
-                const { name, phoneNumber, coordinates } = shop;
-                const marker = L.marker(coordinates, { icon: medicalIcon }).addTo(map);
-                marker.bindPopup(`
-                    <div class="popup-content">
-                        <h3>${name}</h3>
-                        <p>Phone: ${phoneNumber}</p>
-                    </div>
-                `);
-            });
-        });
-
-        document.getElementById('hospitalButton').addEventListener('click', () => {
-            const hospitals = [
-                {
-                    name: "Shri Hospital",
-                    phoneNumber: "987-654-3210",
-                    coordinates: [19.230225899362633, 73.11690174042315]
-                },
-                // Add more hospitals with their details and coordinates
-            ];
-
-            showMarkers('Hospitals', hospitalIcon, hospitals);
-        });
-
-        document.getElementById('policeButton').addEventListener('click', () => {
-            const policeStations = [
-                {
-                    name: "Colaba Police Station",
-                    phoneNumber: "555-123-4567",
-                    coordinates: [18.922444321857455, 72.83118419820215]
-                },
-                // Add more police stations with their details and coordinates
-            ];
-
-            showMarkers('Police Stations', policeIcon, policeStations);
-        });
-
-        function showMarkers(category, icon, locations) {
-            // Clear existing markers (excluding live location marker)
-            map.eachLayer(layer => {
-                if (layer instanceof L.Marker && layer !== marker) {
-                    map.removeLayer(layer);
-                }
-            });
-
-            // Add markers for the specified category
-            locations.forEach(location => {
-                const { name, phoneNumber, coordinates } = location;
-                const marker = L.marker(coordinates, { icon: icon }).addTo(map);
-                marker.bindPopup(`
-                    <div class="popup-content">
-                        <h3>${name}</h3>
-                        <p>Phone: ${phoneNumber}</p>
-                    </div>
-                `).openPopup();
             });
         }
 
         // Watch the user's geolocation and update the live location
         navigator.geolocation.watchPosition(success, error);
-    </script>
+    
+        document.querySelector(".nav-item").focus();
+        var a = document.querySelector(".nav-item").lastChild.focus();
+        function redirectToNextPage(nextPage) {
+            // Redirect to the specified next page
+            window.location.href = nextPage;
+        }</script>
+        <nav>
+            <a class="nav-item" href="home.html">
+                <i data-feather="home"></i><span>Home</span>
+            </a>
+    
+            <a class="nav-item" href="map.html">
+                <i data-feather="map-pin"></i><span>Map</span>
+            </a>
+    
+            <a class="nav-item" href="chat.html">
+                <i data-feather="message-square"></i><span>chat</span>
+            </a>
+        </nav>
 </body>
 
 </html>
