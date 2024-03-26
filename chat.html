@@ -12,9 +12,49 @@
     <!-- Google Fonts Link For Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+<style>
+  .typewriter {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;/* Adjust as needed */
+}
+
+.typewriter h1 {
+    overflow: hidden; /* Ensures the text won't overflow */
+    border-right: .15em solid orange; /* Creates the typewriter cursor effect */
+    white-space: nowrap; /* Keeps the text on one line */
+    margin: 0 auto; /* Centers the text horizontally */
+    letter-spacing: .15em; /* Adjusts spacing between characters */
+    animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink-caret {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: orange;
+    }
+}
+</style>
 
   </head>
-  <body>hello
+  <body>
+    <div class="typewriter">
+      <h1>Hello! It's Me EME!</h1>
+  </div>
+
     <button class="chatbot-toggler">
       <span class="material-symbols-rounded">mode_comment</span>
       <span class="material-symbols-outlined">close</span>
@@ -38,20 +78,16 @@
     <br><br>
     <nav>
       <a class="nav-item" href="home.html">
-        <i data-feather="home"></i><span>Home</span>
-    </a>
+          <i data-feather="home"></i><span>Home</span>
+      </a>
 
-    <a class="nav-item" href="map.html">
-        <i data-feather="map-pin"></i><span>Map</span>
-    </a>
+      <a class="nav-item" href="map.html">
+          <i data-feather="map-pin"></i><span>Map</span>
+      </a>
 
-    <a class="nav-item" href="chat.html">
-        <i data-feather="message-square"></i><span>chat</span>
-    </a>
-
-    <a class="nav-item" href="colab.html">
-        <i data-feather="book-open"></i><span>Colab</span>
-    </a>
+      <a class="nav-item" href="chat.html">
+          <i data-feather="message-square"></i><span>chat</span>
+      </a>
   </nav>
 <script>
   const chatbotToggler = document.querySelector(".chatbot-toggler");
@@ -61,7 +97,7 @@ const chatInput = document.querySelector(".chat-input textarea");
 const sendChatBtn = document.querySelector(".chat-input span");
 
 let userMessage = null; // Variable to store user's message
-const API_KEY = "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"; // Paste your API key here
+const API_KEY = ""; // Paste your API key here
 const inputInitHeight = chatInput.scrollHeight;
 
 const createChatLi = (message, className) => {
