@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <script defer src="js/index.js"></script>
     <script src="https://unpkg.com/feather-icons"></script>
-        <title>Document</title>
-        <style>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
 
+    <title>Document</title>
+    <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -34,13 +37,16 @@
         .get-started {
             font-size: 40px;
             color: #007bff;
-            overflow: hidden; /* Hide overflow */
+            overflow: hidden;
+            /* Hide overflow */
         }
 
         .get-started span {
             display: inline-block;
-            animation: reveal 1s ease-in-out forwards; /* Animation for revealing each letter */
-            opacity: 0; /* Initially hide the letters */
+            animation: reveal 1s ease-in-out forwards;
+            /* Animation for revealing each letter */
+            opacity: 0;
+            /* Initially hide the letters */
         }
 
         @keyframes reveal {
@@ -48,6 +54,7 @@
                 opacity: 0;
                 transform: translateY(-50px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -72,42 +79,42 @@
         }
 
         .login-with-google-btn {
-    transition: background-color .3s, box-shadow .3s;
-    padding: 12px 16px 12px 42px;
-    border: none;
-    border-radius: 50px; /* Make it round */
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
-    color: #757575;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=);
-    background-color: white;
-    background-repeat: no-repeat;
-    background-position: 12px 11px;
-}
+            transition: background-color .3s, box-shadow .3s;
+            padding: 12px 16px 12px 42px;
+            border: none;
+            border-radius: 50px;
+            /* Make it round */
+            box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
+            color: #757575;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=);
+            background-color: white;
+            background-repeat: no-repeat;
+            background-position: 12px 11px;
+        }
 
-.login-with-google-btn:hover {
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
-}
+        .login-with-google-btn:hover {
+            box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+        }
 
-.login-with-google-btn:active {
-    background-color: #eeeeee;
-}
+        .login-with-google-btn:active {
+            background-color: #eeeeee;
+        }
 
-.login-with-google-btn:focus {
-    outline: none;
-    box-shadow: 
-      0 -1px 0 rgba(0, 0, 0, .04),
-      0 2px 4px rgba(0, 0, 0, .25),
-      0 0 0 3px #c8dafc;
-}</style></head>
+        .login-with-google-btn:focus {
+            outline: none;
+            box-shadow:
+                0 -1px 0 rgba(0, 0, 0, .04),
+                0 2px 4px rgba(0, 0, 0, .25),
+                0 0 0 3px #c8dafc;
+        }
+    </style>
+</head>
+
 <body>
-    <div id="splash-screen">
-        <div class="letter">E</div>
-        <div class="letter">M</div>
-        <div class="letter">E</div>
-    </div>
+   
     <div class="container">
         <div class="lets-text">Lets</div>
         <div class="get-started">
@@ -123,21 +130,21 @@
             <span>e</span>
             <span>d</span>
         </div>
-    
+
         <div class="slider-container">
             <div class="slider">
                 <img src="images/onboarding1.jpg" alt="Slide 1">
                 <img src="images/onboarding2.jpg" alt="Slide 1">
                 <img src="images/onboarding3.jpg" alt="Slide 1">
                 <img src="images/onboarding4.jpg" alt="Slide 1">
-                <!-- Add more images for your slider -->
             </div>
         </div>
-    <br><br><br>
-        <button id="signInButton" type="button" style="align-content:center ;" class="login-with-google-btn" >
+        <br><br><br>
+        <!-- <button id="signInButton" type="button" style="align-content:center ;" class="login-with-google-btn">
             Sign in with Google
-          </button>
-           <button id="signOutButton">Sign Out</button>
+        </button> -->
+        <button id="signInButton" class="login-with-google-btn">Sign In Using Google</button>
+        <button id="signOutButton" style="display: none;">Sign Out</button>
     </div>
 
 
@@ -162,13 +169,8 @@
     </script>
 
     <script type="module">
-
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-
-
         import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
-
-        // Add your own Firebase config here
 
         const firebaseConfig = {
             apiKey: "AIzaSyCpwbPqAuHG4EAdDSOI6FKEKHMfHHw5em8",
@@ -183,61 +185,49 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth();
-        const provider = new GoogleAuthProvider()
+        const provider = new GoogleAuthProvider();
 
         const signInButton = document.getElementById("signInButton");
         const signOutButton = document.getElementById("signOutButton");
-        const message = document.getElementById("message");
-        const userName = document.getElementById("userName");
-        const userEmail = document.getElementById("userEmail");
 
-        signOutButton.style.display = "none";
-        message.style.display = "none";
+        signInButton.addEventListener('click', userSignIn);
+        signOutButton.addEventListener('click', userSignOut);
 
-        const userSignIn = async () => {
+        function userSignIn() {
             signInWithPopup(auth, provider)
                 .then((result) => {
-                    const user = result.user
-                    console.log(user);
-                }).catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message
+                    const user = result.user;
+                    localStorage.setItem('user', JSON.stringify({
+                        displayName: user.displayName,
+                        email: user.email
+                    }));
+                    console.log('User signed in:', user.displayName, user.email);
+                    window.location.href = 'home.html';
                 })
+                .catch((error) => {
+                    console.error('Sign-in error:', error);
+                });
         }
 
-        const userSignOut = async () => {
+        function userSignOut() {
             signOut(auth).then(() => {
                 localStorage.clear(); // Clear localStorage on sign-out
                 alert("You have signed out successfully!");
-            }).catch((error) => { })
+            }).catch((error) => {
+                console.log(error);
+            });
         }
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 signOutButton.style.display = "block";
-                message.style.display = "block";
-                userName.innerHTML = user.displayName;
-                userEmail.innerHTML = user.email;
-                window.location.href = "home.html";
-                localStorage.setItem('user', JSON.stringify({
-                    displayName: user.displayName,
-                    email: user.email
-                }));
-
+                // Additional actions if needed
             } else {
                 signOutButton.style.display = "none";
-                message.style.display = "none";
+                // Additional actions if needed
             }
-        })
-
-        signInButton.addEventListener('click', userSignIn);
-        signOutButton.addEventListener('click', userSignOut);
-
-
-
-
-
-
+        });
     </script>
 </body>
+
 </html>
