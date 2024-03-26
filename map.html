@@ -28,6 +28,7 @@
             width: 100vw; /* Full width */
             z-index: 0;
         }
+        
 
         .button-container {
             position: fixed;
@@ -63,17 +64,46 @@
                 border-radius: 50px;
             }
         }
+        #cancelRoutingButton {
+    position: absolute;
+    top: 80px;
+    left: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+    border: none;
+    border-radius: 15px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 12px;
+    margin: 0;
+    z-index: 1001;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+    .button-container {
+        top: 10px;
+        width: 80%;
+        left: 15%;
+    }
+
+    #cancelRoutingButton {
+        padding: 10px 12px;
+        border-radius: 50px;
+    }
+}
     </style>
 </head>
 
 <body>
     <div class="button-container">
-        <button id="hospitalButton" class="round-button">Hospital</button>
+        
         <button id="toiletButton" class="round-button">Toilet</button>
         <button id="medicalButton" class="round-button">Medical Shop</button>
         <button id="garageButton" class="round-button">Garage</button>
+        <button id="hospitalButton" class="round-button">Hospital</button>
     </div>
-
+    <button id="cancelRoutingButton" class="round-button"><i data-feather="x"></i></button>
     <div id="map"></div>
 
     <script>
@@ -119,23 +149,40 @@
 
         // Function to handle double click on the map
         function handleMapDoubleClick(e) {
-            const destination = e.latlng;
+    const destination = e.latlng;
 
-            // Clear existing routing control
-            if (routingControl) {
-                map.removeControl(routingControl);
-            }
+    // Clear existing routing control
+    if (routingControl) {
+        map.removeControl(routingControl);
+    }
 
-            // Create a new routing control and add it to the map
-            routingControl = L.Routing.control({
-                waypoints: [
-                    L.latLng(marker.getLatLng()), // Start from live location
-                    destination
-                ],
-                routeWhileDragging: true,
-            position: 'bottomleft'
-            }).addTo(map);
+    // Create a new routing control and add it to the map
+    routingControl = L.Routing.control({
+        waypoints: [
+            L.latLng(marker.getLatLng()), // Start from live location
+            destination
+        ],
+        routeWhileDragging: true,
+        
+        collapsible: true, // Make the control collapsible
+        lineOptions: {
+            styles: [{ color: 'blue', opacity: 5, weight: 7 }]
         }
+    }).addTo(map);
+}
+
+        // Event listener for cancel routing button
+document.getElementById('cancelRoutingButton').addEventListener('click', function() {
+    cancelRouting(); // Call function to cancel routing
+});
+
+// Function to cancel routing
+function cancelRouting() {
+    if (routingControl) {
+        map.removeControl(routingControl);
+    }
+}
+        
 
         // Attach the double-click event listener to the map
         map.on('dblclick', handleMapDoubleClick);
@@ -154,8 +201,7 @@
             // Popup content
             const popupContent = `
                 <b>Name:</b> ${name}<br>
-                <b>Phone:</b> ${phone}<br>
-                <b>Cost:</b> ${cost}
+                
             `;
 
             marker.bindPopup(popupContent);
@@ -164,31 +210,52 @@
         // Define custom icons for each location type
         const icons = {
             hospital: 'images/hospital-icon.png',
-            toilet: 'toilet-icon.png',
-            medical: 'medical-icon.png',
-            garage: 'garage-icon.png'
+            toilet: 'images/toilet-icon.png',
+            medical: 'images/medical-icon.png',
+            garage: 'images/garage-icon.png'
         };
 
         // Define coordinates and details for each location type
         const locations = {
             hospital: [
-                { coordinates: [19.231950950204823, 73.11875942733596], name: "Hospital 1", phone: "1234567890", cost: "$50" },
-                { coordinates: [51.52, -0.11], name: "Hospital 2", phone: "1234567890", cost: "$50" }
+                { coordinates: [18.945833882174032, 72.83209741146594], name: "Gokuldas Tejpal Hospital"},
+                { coordinates: [18.959552888588686, 72.82020986170461], name: "Sir H. N. Reliance Foundation Hospital and Research Centre"},
+                { coordinates: [18.955250599446444, 72.82123982979088], name: "Conwest And Manjula S. Badani Jain Hospital"},
+                { coordinates: [18.940716870577738, 72.83789902909433], name: "Saint George Hospital"},
+                { coordinates: [18.942162331061116, 72.83224783775643], name: "Cama And Albless Hospital"}
+                
+               
                 // Add more hospitals as needed
             ],
             toilet: [
-                { coordinates: [19.23189016965419, 73.11807278184695], name: "Toilet 1", phone: "1234567890", cost: "$50" },
-                { coordinates: [51.54, -0.13], name: "Toilet 2", phone: "1234567890", cost: "$50" }
+                { coordinates: [18.92302198281658, 72.83432752576724], name: "Sulabh Shauchalaya" },
+                { coordinates: [18.92307760009965, 72.83371492135467], name: "SBM Toilet" },
+                { coordinates: [18.923910063033183, 72.8327514444156], name: "Public Washroom" },
+                { coordinates: [18.919197126745548, 72.82889815591147], name: "SBM Toilet" },
+                { coordinates: [18.926845907154956, 72.83352721886041], name: "SBM Toilet" },
+                { coordinates: [18.920752477102685, 72.82607517957175], name: "SBM Toilet" }
+                
                 // Add more toilets as needed
             ],
             medical: [
-                { coordinates: [19.23270057514642, 73.120132718314], name: "Medical Shop 1", phone: "1234567890", cost: "$50" },
-                { coordinates: [19.23174834828191, 73.11972502255489], name: "Medical Shop 2", phone: "1234567890", cost: "$50" }
+                { coordinates: [18.923473938647827, 72.83199059983818], name: "Sheetal Medical & General Stores" },
+                { coordinates: [18.92014279875353, 72.83010229632202], name: "S.K. MEDICAL AND GENERAL STORE" },
+                { coordinates: [18.919102299846084, 72.82971959002865], name: "General Medical (Colaba)" },
+                { coordinates: [18.919010956703353, 72.82925825010105], name: "Colaba Chemist And Druggist" },
+                { coordinates: [18.919010956703353, 72.82865743531168], name: "Apollo Pharmacy - Colaba, Mumbai" },
+                { coordinates: [18.918310657617596, 72.82829265490382], name: "Royal Chemist1" },
+                { coordinates: [18.915732719752743, 72.82877545241207], name: "Gurudutt Medical And General Stores" },
+                { coordinates: [18.91671721252165, 72.82557825942571], name: "Jai Medical & General Stores" },
+                { coordinates: [18.91483956665863, 72.82474141025479], name: "Naval Chemist & General Trading" }
+                
+                
                 // Add more medical shops as needed
             ],
             garage: [
-                { coordinates: [51.57, -0.16], name: "Garage 1", phone: "1234567890", cost: "$50" },
-                { coordinates: [51.58, -0.17], name: "Garage 2", phone: "1234567890", cost: "$50" }
+                { coordinates: [18.91763890056311, 72.82658672707991], name: "Akbar Motors" },
+                { coordinates: [18.916796504536066, 72.82788491617839], name: "ARUN GARAGE" },
+                { coordinates: [18.919748678031095, 72.8245825318123], name: "Janta Garage" },
+                { coordinates: [18.91510179697133, 72.82471372659893], name: "Roots Garage" }
                 // Add more garages as needed
             ]
         };
@@ -237,7 +304,7 @@
         navigator.geolocation.watchPosition(success, error);
     
         document.querySelector(".nav-item").focus();
-        var a = document.querySelector(".nav-item").lastChild.focus();
+        document.querySelector(".nav-item:last-child").focus();
         function redirectToNextPage(nextPage) {
             // Redirect to the specified next page
             window.location.href = nextPage;
