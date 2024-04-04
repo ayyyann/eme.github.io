@@ -1,19 +1,22 @@
-var staticCacheName = "eme";
- 
-self.addEventListener("install", function (e) {
-  e.waitUntil(
-    caches.open(staticCacheName).then(function (cache) {
-      return cache.addAll(["/"]);
-    })
-  );
-});
- 
-self.addEventListener("fetch", function (event) {
-  console.log(event.request.url);
- 
-  event.respondWith(
-    caches.match(event.request).then(function (response) {
-      return response || fetch(event.request);
-    })
-  );
-});
+{
+    "name":"EME Emergency Assistant",
+    "short_name":"EME",
+    "start_url":"index.html",
+    "display":"standalone",
+    "background_color":"#0d42ee",
+    "theme_color":"black",
+    "scope": ".",
+    "description":"This is a EME App.",
+    "icons":[
+    {
+    "src":"images/icon-192x192.png",                     
+    "sizes":"192x192",
+    "type":"image/png"
+    },
+    {
+    "src":"images/icon-512x512.png",
+    "sizes":"512x512",
+    "type":"image/png"
+    }
+  ]
+}
